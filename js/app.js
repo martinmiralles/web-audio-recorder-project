@@ -138,6 +138,10 @@ function createDownloadLink(blob, encoding) {
   var li = document.createElement("li");
   var link = document.createElement("a");
 
+  var buttonLink = document.createElement("a");
+
+  var fileName = document.createElement("p");
+
   //add controls to the <audio> element
   au.controls = true;
   au.src = url;
@@ -147,9 +151,18 @@ function createDownloadLink(blob, encoding) {
   link.download = new Date().toISOString() + "." + encoding;
   link.innerHTML = link.download;
 
+  buttonLink.className = "btn btn-default";
+  buttonLink.href = url;
+  buttonLink.download = new Date().toISOString() + "." + encoding;
+  buttonLink.innerHTML = "Download";
+
+  fileName.innerHTML = new Date().toISOString() + "." + encoding;
+
   //add the new audio and a elements to the li element
   li.appendChild(au);
-  li.appendChild(link);
+  // li.appendChild(link);
+  li.appendChild(fileName);
+  li.appendChild(buttonLink);
 
   //add the li element to the ordered list
   recordingsList.appendChild(li);
