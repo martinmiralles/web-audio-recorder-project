@@ -23,6 +23,7 @@
 
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
+
   <body>
     <container class="text-center">
       <h1>Audio Recording Demo</h1>
@@ -71,6 +72,37 @@
         <hr />
         <h1>Recordings</h1>
         <ol id="recordingsList"></ol>
+      </div>
+
+      <div class="overlay" id="overlay" style="display: none;"></div>
+
+      <div id="saveRecording" style="display: none;">
+        <div class="saveRecording_container">
+          <div class="saveRecording_header">
+            <h3>Name Your Recording...</h3>
+          </div>
+
+          <hr />
+
+          <div class="saveRecording_fields">
+            <input
+              type="text"
+              name=""
+              id="saveRecording_field"
+              class="saveRecording_field"
+              placeholder="Recording Name..."
+            />
+            <p id="savingRecording_encoding"></p>
+          </div>
+
+          <hr />
+
+          <div class="saveRecording_buttons">
+            <button id="saveRecording_button">
+              Save
+            </button>
+          </div>
+        </div>
       </div>
     </container>
 

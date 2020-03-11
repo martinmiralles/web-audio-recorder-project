@@ -6,6 +6,16 @@ var recorder; //WebAudioRecorder object
 var input; //MediaStreamAudioSourceNode  we'll be recording
 var encodingType; //holds selected encoding for resulting audio (file)
 var encodeAfterRecord = true; // when to encode
+var recordingName;
+
+//custom global variables
+var url;
+var au;
+var li;
+var link;
+var buttonLink;
+var fileName;
+var encodingThing;
 
 // shim for AudioContext when it's not avb.
 var AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -15,9 +25,15 @@ var encodingTypeSelect = document.getElementById("encodingTypeSelect");
 var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
 
+// variables for prompt
+var overlay = document.getElementById("overlay");
+var prompt = document.getElementById("saveRecording");
+var nameButton = document.getElementById("saveRecording_button");
+
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
+nameButton.addEventListener("click", namingButtonClick);
 
 function startRecording() {
   console.log("startRecording() called");
@@ -87,8 +103,17 @@ function startRecording() {
         }
       });
 
+      /*********************/
+      /**** ON COMPLETE ****/
+      /*********************/
+
       recorder.onComplete = function(recorder, blob) {
         __log("Encoding complete");
+        document.getElementById("savingRecording_encoding").innerHTML =
+          "." + recorder.encoding;
+        overlay.style = "display: block";
+        prompt.style = "display: block";
+
         createDownloadLink(blob, recorder.encoding);
         encodingTypeSelect.disabled = false;
       };
@@ -133,32 +158,41 @@ function stopRecording() {
 }
 
 function createDownloadLink(blob, encoding) {
-  var url = URL.createObjectURL(blob);
-  var au = document.createElement("audio");
-  var li = document.createElement("li");
-  var link = document.createElement("a");
+  //bring up translucent overlay in the background
+  url = URL.createObjectURL(blob);
+  au = document.createElement("audio");
+  li = document.createElement("li");
+  link = document.createElement("a");
 
-  var buttonLink = document.createElement("a");
-
-  var fileName = document.createElement("p");
+  //added download button
+  buttonLink = document.createElement("a");
+  fileName = document.createElement("p");
 
   //add controls to the <audio> element
   au.controls = true;
   au.src = url;
 
+  encodingThing = "." + encoding;
+
   //link the a element to the blob
   link.href = url;
-  link.download = new Date().toISOString() + "." + encoding;
+  // link.download = recordingName + "." + encoding;
   link.innerHTML = link.download;
 
   buttonLink.className = "btn btn-default";
   buttonLink.href = url;
-  buttonLink.download = new Date().toISOString() + "." + encoding;
+  // buttonLink.download = recordingName + "." + encoding;
   buttonLink.innerHTML = "Download";
+}
 
-  fileName.innerHTML = new Date().toISOString() + "." + encoding;
+function namingButtonClick() {
+  recordingName = document.getElementById("saveRecording_field").value;
+  // console.log(recordingName);
 
-  //add the new audio and a elements to the li element
+  link.download = recordingName + encodingThing;
+  buttonLink.download = recordingName + encodingThing;
+  fileName.innerHTML = recordingName + encodingThing;
+
   li.appendChild(au);
   // li.appendChild(link);
   li.appendChild(fileName);
@@ -166,6 +200,9 @@ function createDownloadLink(blob, encoding) {
 
   //add the li element to the ordered list
   recordingsList.appendChild(li);
+
+  overlay.style = "display: none";
+  prompt.style = "display: none";
 }
 
 //helper function

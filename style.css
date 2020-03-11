@@ -139,3 +139,67 @@ audio {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
+/*************************/
+/* SAVE RECORDING PROMPT */
+/*************************/
+
+.overlay {
+  background-color: #cccccc;
+  opacity: 50%;
+  height: 100%;
+  width: 100%;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+#saveRecording {
+  /* display: none; */
+  top: 20%;
+  /* bottom: 50%; */
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 100;
+  margin: 0 auto;
+}
+
+.saveRecording_container {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  display: inline-block;
+  /* padding: 10px; */
+  padding: 20px 60px;
+  background-color: white;
+}
+
+.saveRecording_container h3 {
+  font-weight: bold;
+  padding: 10px;
+}
+
+.saveRecording_container .saveRecording_fields {
+  /* display: flex; */
+  padding: 10px;
+  display: inline-block;
+}
+
+.saveRecording_container .saveRecording_field {
+  padding: 5px;
+  display: inline;
+  vertical-align: bottom;
+}
+
+.saveRecording_container p {
+  display: inline;
+  margin: 0;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.saveRecording_container .saveRecording_buttons {
+  display: flex;
+  padding: 10px;
+}
